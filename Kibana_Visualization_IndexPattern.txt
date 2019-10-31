@@ -1,0 +1,70 @@
+Solution 1 - 
+
+curl -XPUT -H "Content-Type: application/json" http://localhost:9200/_cluster/settings -d '{ "transient": { "cluster.routing.allocation.disk.threshold_enabled": false } }'
+curl -XPUT -H "Content-Type: application/json" http://localhost:9200/_all/_settings -d '{"index.blocks.read_only_allow_delete": null}'
+
+
+Solutions 2 -
+
+If you are not able to create index pattern, please go to dev tool and execute below commands
+
+POST .kibana/_search
+{
+  "query": {
+    "term": {
+      "type": {
+        "value": "index-pattern"
+      }
+    }
+  }
+}
+
+Change the "cluster.routing.allocation.disk.watermark.flood_stage" setting to something else. It can either be set to a lower percentage or to an absolute value. Here's an example of how to change the setting from the docs:
+
+PUT _cluster/settings
+{
+  "transient": {
+    "cluster.routing.allocation.disk.watermark.low": "100gb",
+    "cluster.routing.allocation.disk.watermark.high": "50gb",
+    "cluster.routing.allocation.disk.watermark.flood_stage": "10gb",
+    "cluster.info.update.interval": "1m"
+  }
+}
+
+
+
+
+Solution 3:  - change the flood stage watermark setting
+
+PUT /_settings
+{
+  "index": {
+    "blocks": {
+      "read_only_allow_delete": "true"
+    }
+  }
+}
+
+
+PUT .kibana/_settings
+{
+  "index": {
+    "blocks": {
+      "read_only_allow_delete": "false"
+    }
+  }
+}
+PUT your_index_name/_settings
+{
+    "index": {
+      "blocks": {
+        "read_only_allow_delete": "false"
+      }
+    }
+}
+
+
+PUT /_settings
+{
+  "index.blocks.read_only_allow_delete": null
+}

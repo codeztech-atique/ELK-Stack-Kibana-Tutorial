@@ -1,0 +1,31 @@
+#Elasticsearch Pagination
+
+
+#from and go if you have a huge no of data
+GET /students/_search?size=5
+{
+  "query": {
+        "match_all": {}
+  },
+  "sort": [
+    {
+      "student_id": {
+        "order": "desc"
+      }
+    }
+  ]
+}
+
+GET /students/_search?size=3&from=11
+{
+  "query": {
+        "match_all": {}
+  },
+  "sort": [
+    {
+      "student_id": {
+        "order": "desc"
+      }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+
+# It's a sort of projection
+GET /students/_search
+{
+  "_source": ["student_id","skills"],
+  "query": {
+        "match_all": {}
+  }
+}

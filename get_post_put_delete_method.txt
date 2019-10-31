@@ -1,0 +1,57 @@
+# insert the data into elastic search
+PUT /students/_doc/1
+{
+  "student_id": 1,
+  "age": 15,
+  "dept": "Commerces",
+  "skills": [
+  "kibana",
+  "elastic-search",
+  "html-css"
+  ],
+  "leaves": {
+    "CL": 10,
+    "SL": 10,
+    "PL": 21
+  }
+}
+
+GET /students/_search
+{
+  "query": {
+    "match": {
+      "student_id": "1"
+    }
+  }
+}
+
+# 1 shot it will gives you 10 data if want to
+# increase more than you can add size keyword
+GET /students/_search
+{
+  "size": 20
+}
+
+
+
+# Update query If the record not present it will create the record
+POST /students/_update/5db03a07f8661b8d7cb62449
+{
+   "doc":{
+     "dept" : "Science & Commerces",
+      "age":15
+  },
+  "doc_as_upsert" : false
+}
+
+
+GET /_cat/indices
+
+GET /_cat/shards
+
+
+# DELETE Query 
+
+DELETE /students/_doc/1
+DELETE /company
+

@@ -1,0 +1,37 @@
+# Aggregation with sum query
+GET /students/_search
+{
+  "query": {
+        "match_all": {}
+  },
+  "aggs" : {
+        "Casual_Leaves" : { "sum" : { "field" : "leaves.CL" } 
+        }
+  }
+}
+
+# Aggregation with count query get no of repeated value
+GET /students/_search
+{
+  "query": {
+        "match_all": {}
+  },
+  "aggs" : {
+      "count": {
+            "terms": {
+                  "field": "dept.keyword",
+                  "size": 100,
+                  "order": {
+                  "_key": "desc"
+                  }
+            }
+	}
+  }
+}
+
+
+#get the total count of record
+GET /students/_count
+{
+  
+}
